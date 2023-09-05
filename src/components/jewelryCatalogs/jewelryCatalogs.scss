@@ -1,0 +1,22 @@
+.catalog {
+    padding-top: 40px;
+    padding-bottom: 290px;
+}
+
+.catalog__wrapper {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 380px);
+    row-gap: 150px;
+    column-gap: 57px;
+}
+
+.catalog__wrapper-shop {
+    padding-top: 40px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    row-gap: 150px;
+    column-gap: 24px;
+}   
+
