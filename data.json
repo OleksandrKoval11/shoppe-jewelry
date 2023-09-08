@@ -4,37 +4,43 @@
             "id": 1,
             "name": "Lira Earrings",
             "price": "20.00",
-            "type": "earrings"
+            "type": "earrings",
+            "img": "./src/assets/img/Cards/01.jpg"
         },
         {
             "id": 2,
             "name": "Hal Earrings",
             "price": "25.00",
-            "type": "earrings"
+            "type": "earrings",
+            "img": "./src/assets/img/Cards/02.jpg"
         },
         {
             "id": 3,
             "name": "Kaede Hair Pin Set Of 3",
             "price": "30.00",
-            "type": "hairpin"
+            "type": "hairpin",
+            "img": "./src/assets/img/Cards/03.jpg"
         },
         {
             "id": 4,
             "name": "Plaine Necklace",
             "price": "19.00",
-            "type": "necklace"
+            "type": "necklace",
+            "img": "./src/assets/img/Cards/04.jpg"
         },
         {
             "id": 5,
             "name": "Lira Earrings",
             "price": "20.00",
-            "type": "earrings"
+            "type": "earrings",
+            "img": "./src/assets/img/Cards/05.jpg"
         },
         {
             "id": 6,
             "name": "Yuki Hair Pin Set of 3",
             "price": "29.00",
-            "type": "hairpin"
+            "type": "hairpin",
+            "img": "./src/assets/img/Cards/06.jpg"
         }
     ]
 }

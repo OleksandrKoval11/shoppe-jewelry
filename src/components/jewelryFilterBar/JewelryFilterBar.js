@@ -1,29 +1,45 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-import { updateTerm } from './JewelryFilterBarSlice';
+import { updateTerm, setMaxValue, setMinValue, setMaxPrice, setMinPrice, setSliderMaxValue, setSliderMinValue } from './JewelryFilterBarSlice';
 
 import './jewelryFilterBar.scss';
 import search from '../../assets/icons/searchIcon.svg';
 
 const JewelryFilterBar = () => {
-    const [minValue, setMinValue] = useState(0);
-    const [maxValue, setMaxValue] = useState(100);
+    const {goods} = useSelector(state => state.goods);
+
+    const {term, maxPrice, minPrice, sliderMaxValue, sliderMinValue} = useSelector(state => state.filters);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (goods.length > 0) {
+            const maxPrice = Math.max(...goods.map(item => parseFloat(item.price)));
+            const minPrice = Math.min(...goods.map(item => parseFloat(item.price)));
+            dispatch(setSliderMaxValue(maxPrice));
+            dispatch(setSliderMinValue(minPrice));
+            dispatch(setMaxPrice(maxPrice));
+            dispatch(setMinPrice(minPrice));
+            dispatch(setMaxValue(maxPrice));
+        }
+    }, [goods, dispatch]);
 
     const handlePriceChange = (values) => {
-        setMinValue(values[0]);
-        setMaxValue(values[1]);
+        dispatch(setSliderMaxValue(values[1]))
+        dispatch(setSliderMinValue(values[0]))
     };
-
-    const {term} = useSelector(state => state.filters);
-    const dispatch = useDispatch();
 
     const handleInputChange = (e) => {
         const newTerm = e.target.value;
         dispatch(updateTerm(newTerm));
-      };
+    };
+
+    const handleChangeFilter = (sliderMinValue, sliderMaxValue) => {
+        dispatch(setMinValue(sliderMinValue))
+        dispatch(setMaxValue(sliderMaxValue))
+    }
 
     return (
         <div className="filterbar">
@@ -53,15 +69,15 @@ const JewelryFilterBar = () => {
                 <div>
                     <Slider
                         range
-                        min={0}
-                        max={100}
-                        value={[minValue, maxValue]}
+                        min={minPrice}
+                        max={maxPrice}
+                        value={[sliderMinValue, sliderMaxValue]}
                         onChange={handlePriceChange}
                     />
 
                     <div className="filterbar__price__wrapper">
-                        <div className='filterbar__price-info'>Price: ${minValue} - ${maxValue}</div>
-                        <button className='filterbar__price-btn'>Filter</button>
+                        <div className='filterbar__price-info'>Price: ${sliderMinValue} - ${sliderMaxValue}</div>
+                        <button onClick={() => handleChangeFilter(sliderMinValue, sliderMaxValue)} className='filterbar__price-btn'>Filter</button>
                     </div>
                 </div>        
 

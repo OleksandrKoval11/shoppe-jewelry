@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSelectedItem } from './InfoItemSlice';
-import { fetchGoods } from '../jewelryCatalogs/JewelryCatalogsSlice';
-import { createSelector } from "@reduxjs/toolkit";
+import { fetchSelectedItem, counterPlus, counterMinus, getTypeOfItem } from './InfoItemSlice';
+import { showNotification } from '../notification/NotificationSlice';
+import { fetchGoods, addCounter, addedGoods } from '../jewelryCatalogs/JewelryCatalogsSlice';
 
 import img from '../../assets/img/Cards/01.jpg';
 
@@ -12,28 +12,41 @@ import './infoitem.scss';
 const InfoItem = () => {
     const { Id } = useParams();
     const dispatch = useDispatch();
-    
-    const selectedItemSelector = createSelector(
-        (state) => state.goods.goods,
-        (state) => state.item.selectedItemId,
-        (goods, selectedItem) => {
-            return goods.filter(item => item.id === +selectedItem)
-        }
-    )
 
-    useEffect(() => {
+    const { goods } = useSelector(state => state.goods);
+    const {selectedItemId} = useSelector(state => state.item);
+
+    useEffect(() => {   
         dispatch(fetchGoods());
         dispatch(fetchSelectedItem(Id));
 		// eslint-disable-next-line
 	}, [Id]);
 
-    const selectedItem = useSelector(selectedItemSelector);
+    const onPlus = () => {
+        dispatch(counterPlus());
+    }
 
-    if (selectedItem.length === 0) {
+    const onMinus = () => {
+        dispatch(counterMinus());
+    }
+
+    const onBuy = () => {
+        dispatch(showNotification(true));
+        dispatch(addedGoods(+Id));
+        dispatch(addCounter({id: Id, counter: selectedItemId.counter}));
+
+        setTimeout(() => {
+            dispatch(showNotification(false));
+        }, 2000); 
+    }
+
+    const selectedItemInfo = goods.find(item => item.id === +Id);
+
+    if (!selectedItemInfo) {
         return <h4>Loading</h4>;
     }
 
-    const {name, price} = selectedItem[0];    
+    const {name, price} = selectedItemInfo;    
 
     return (
         <div className="info">
@@ -51,10 +64,10 @@ const InfoItem = () => {
 
                     <div className="info__text">
                         <div className="info__title">{name}</div>
-                        <div className="info__price">$ {price}</div>
+                        <div className="info__price">{price} $  </div>
                         <div className="info__review__wrapper">
                             <div className="star__wrapper">
-                                <svg className='star' xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                {/* <svg className='star' xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                     <g clip-path="url(#clip0_888_1330)">
                                         <path d="M17.9529 6.90409C17.8344 6.53961 17.5111 6.28156 17.1302 6.24709L11.9341 5.77536L9.88059 0.967661C9.72898 0.614445 9.384 0.386475 9.00002 0.386475C8.61605 0.386475 8.27093 0.614445 8.12028 0.967661L6.06676 5.77536L0.869868 6.24709C0.488911 6.28225 0.166319 6.54029 0.0471156 6.90409C-0.0714014 7.26856 0.0380517 7.66833 0.326173 7.92102L4.25399 11.3652L3.09587 16.4659C3.01114 16.841 3.15671 17.2288 3.4679 17.4537C3.63517 17.5753 3.83169 17.636 4.0289 17.636C4.19837 17.636 4.36797 17.5909 4.51945 17.5003L9.00002 14.8212L13.4798 17.5003C13.8084 17.6967 14.2216 17.6787 14.5321 17.4537C14.8433 17.2288 14.9889 16.841 14.9042 16.4659L13.7461 11.3652L17.6739 7.92102C17.9619 7.66833 18.0714 7.26939 17.9529 6.90409Z" fill="black"/>
                                     </g>
@@ -103,28 +116,28 @@ const InfoItem = () => {
                                         <rect width="18" height="18" fill="white"/>
                                         </clipPath>
                                     </defs>
-                                </svg>
+                                </svg> */}
                             </div>
                             <div className="info__review-text">1 customer review</div>
                         </div>
                         <div className="info__descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat, augue a volutpat hendrerit, sapien tortor faucibus augue, a maximus elit ex vitae libero. Sed quis mauris eget arcu facilisis consequat sed eu felis.</div>
                         <div className="info__btns-wrapper">
                             <div className="cart__item-counter-wrapper">
-                                <button >-</button>
-                                <div>1</div>
-                                <button>+</button>
-                            </div>
-                            <button className="info__btn">ADD TO CART</button>
+                                <button onClick={onMinus}>-</button>
+                                <div>{selectedItemId.counter}</div>
+                                <button onClick={onPlus}>+</button>
+                            </div>  
+                            <button onClick={onBuy} className="info__btn">ADD TO CART</button>
                         </div>
                         <div className="info__wishlist">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="240" height="20" viewBox="0 0 240 20" fill="none">
+                            {/* <svg xmlns="http://www.w3.org/2000/svg" width="240" height="20" viewBox="0 0 240 20" fill="none">
                                 <path d="M153.5 3.84224H150.5C149.948 3.84224 149.5 4.26641 149.5 4.78965V7.63189H153.5C153.614 7.6295 153.722 7.67963 153.789 7.7663C153.857 7.85298 153.876 7.96538 153.84 8.0677L153.1 10.152C153.032 10.3433 152.843 10.4726 152.63 10.4741H149.5V17.5797C149.5 17.8413 149.276 18.0534 149 18.0534H146.5C146.224 18.0534 146 17.8413 146 17.5797V10.4741H144.5C144.224 10.4741 144 10.262 144 10.0004V8.10559C144 7.84397 144.224 7.63189 144.5 7.63189H146V4.78965C146 2.69668 147.791 1 150 1H153.5C153.776 1 154 1.21209 154 1.47371V3.36853C154 3.63015 153.776 3.84224 153.5 3.84224Z" fill="#707070"/>
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M191 1.94653H183C180.239 1.94653 178 4.06739 178 6.6836V14.2629C178 16.8791 180.239 19 183 19H191C193.761 19 196 16.8791 196 14.2629V6.6836C196 4.06739 193.761 1.94653 191 1.94653ZM194.25 14.2637C194.245 15.9621 192.793 17.3376 191 17.3428H183C181.207 17.3376 179.755 15.9621 179.75 14.2637V6.6844C179.755 4.98602 181.207 3.6105 183 3.6053H191C192.793 3.6105 194.245 4.98602 194.25 6.6844V14.2637ZM191.75 6.92125C192.302 6.92125 192.75 6.49707 192.75 5.97383C192.75 5.45059 192.302 5.02641 191.75 5.02641C191.198 5.02641 190.75 5.45059 190.75 5.97383C190.75 6.49707 191.198 6.92125 191.75 6.92125ZM187 6.21076C184.515 6.21076 182.5 8.11952 182.5 10.4741C182.5 12.8287 184.515 14.7374 187 14.7374C189.485 14.7374 191.5 12.8287 191.5 10.4741C191.503 9.34262 191.029 8.25675 190.185 7.45668C189.34 6.6566 188.194 6.20824 187 6.21076ZM184.25 10.4741C184.25 11.913 185.481 13.0795 187 13.0795C188.519 13.0795 189.75 11.913 189.75 10.4741C189.75 9.03514 188.519 7.86866 187 7.86866C185.481 7.86866 184.25 9.03514 184.25 10.4741Z" fill="#707070"/>
                                 <path d="M239.971 4.28076C239.455 4.93291 238.831 5.50179 238.124 5.96542C238.124 6.13578 238.124 6.30614 238.124 6.48597C238.129 9.57967 236.825 12.5461 234.503 14.7203C232.181 16.8945 229.036 18.0946 225.772 18.0515C223.885 18.0574 222.023 17.6493 220.33 16.859C220.239 16.8212 220.18 16.7357 220.181 16.6413V16.5372C220.181 16.4013 220.297 16.2911 220.44 16.2911C222.295 16.2332 224.083 15.624 225.552 14.5496C223.874 14.5176 222.363 13.5755 221.668 12.1268C221.633 12.0476 221.644 11.9569 221.697 11.8873C221.75 11.8177 221.838 11.7793 221.928 11.786C222.438 11.8346 222.953 11.7896 223.446 11.6535C221.592 11.2891 220.2 9.83154 220.001 8.04759C219.994 7.96201 220.034 7.87912 220.108 7.82886C220.181 7.7786 220.277 7.76824 220.36 7.80152C220.858 8.00941 221.394 8.11891 221.938 8.12331C220.314 7.11359 219.613 5.19306 220.23 3.44789C220.294 3.27831 220.447 3.15304 220.634 3.1181C220.82 3.08317 221.012 3.14373 221.139 3.27753C223.33 5.48698 226.341 6.80358 229.536 6.94972C229.455 6.64029 229.414 6.32229 229.417 6.00328C229.447 4.33057 230.539 2.84048 232.182 2.23063C233.826 1.62077 235.695 2.01184 236.915 3.22075C237.747 3.07065 238.551 2.80599 239.302 2.4352C239.357 2.40267 239.426 2.40267 239.481 2.4352C239.516 2.48733 239.516 2.55343 239.481 2.60556C239.118 3.39452 238.503 4.05624 237.724 4.49844C238.407 4.42346 239.077 4.27093 239.721 4.04415C239.775 4.00918 239.847 4.00918 239.901 4.04415C239.946 4.06384 239.98 4.10149 239.994 4.14709C240.007 4.19268 239.999 4.24157 239.971 4.28076Z" fill="#707070"/>
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M117.125 1.94653H100.125C98.9514 1.94653 98 2.8479 98 3.95979V16.0393C98 17.1512 98.9514 18.0526 100.125 18.0526H117.125C118.299 18.0526 119.25 17.1512 119.25 16.0393V3.95979C119.25 2.8479 118.299 1.94653 117.125 1.94653ZM117.125 3.96057V6.8798L109.316 12.0639C108.9 12.337 108.35 12.337 107.934 12.0639L100.125 6.8798V3.96057H117.125ZM100.125 8.99372V16.0401H117.125V8.99372L110.378 13.4632C109.325 14.1604 107.925 14.1604 106.872 13.4632L100.125 8.99372Z" fill="#707070"/>
                                 <line x1="59.5" y1="2.18557e-08" x2="59.5" y2="19.6639" stroke="#D8D8D8"/>
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M9.56899 3.01405C10.6777 1.77861 12.231 1.05209 13.875 1C16.7817 1 19.138 3.39588 19.138 6.35135C19.138 9.85038 15.3125 13.6852 13.0182 15.9851C12.8117 16.1921 12.6175 16.3868 12.4397 16.5676L10.258 18.7859C10.1235 18.9228 9.94108 18.9998 9.7508 19H9.38718C9.19691 18.9998 9.01449 18.9228 8.88003 18.7859L6.6983 16.5676C6.52047 16.3868 6.32632 16.1921 6.11976 15.9851C3.82545 13.6852 0 9.85038 0 6.35135C0 3.39588 2.3563 1 5.26295 1C6.90699 1.05209 8.4603 1.77861 9.56899 3.01405ZM9.56914 16.7329L11.6743 14.6215C13.6168 12.6756 17.2243 9.03663 17.2243 6.35122C17.2244 5.44297 16.8676 4.57233 16.2333 3.93284C15.599 3.29336 14.7397 2.93801 13.8465 2.9458C12.3588 3.08623 11.0159 3.91052 10.2007 5.18365C10.1094 5.30497 9.96818 5.37675 9.81793 5.37824H9.38733C9.16376 5.37763 8.95255 5.27383 8.81319 5.09608C8.01092 3.86988 6.70555 3.07922 5.26309 2.9458C3.4134 2.9458 1.91394 4.47046 1.91394 6.35122C1.91394 9.03663 5.52145 12.6756 7.46396 14.6215L9.56914 16.7329Z" fill="#707070"/>
-                            </svg>
+                            </svg> */}
                         </div>
                         <ul className="info__catgrs">
                             <li className='info__catgrs-key'>SKU: <span className='info__catgrs-value'>12</span></li>

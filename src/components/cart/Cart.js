@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeGoods, changeCounters } from '../jewelryCatalogs/JewelryCatalogsSlice';
+import { removeGoods, plusCounter, minusCounter } from '../jewelryCatalogs/JewelryCatalogsSlice';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 import CartItem from '../cartItem/CartItem';
@@ -9,16 +9,10 @@ import './cart.scss';
 
 
 const Cart = () => {
-    const {orderedGoods, orderedCounters} = useSelector(state => state.goods)
+    const {orderedGoods} = useSelector(state => state.goods)
     const dispatch = useDispatch();
     
     useEffect(() => {
-        const newCounters = {};
-        orderedGoods.forEach(item => {
-            newCounters[item.id] = orderedCounters[item.id] || 1;
-        });
-        dispatch(changeCounters(newCounters))
-        // eslint-disable-next-line
     }, [orderedGoods]);
 
     const onRemove = (id) => {
@@ -26,25 +20,19 @@ const Cart = () => {
     }
 
     const onPlus = (id) => {
-        const newCounters = { ...orderedCounters };
-        newCounters[id] = (newCounters[id] || 0) + 1;
-        dispatch(changeCounters(newCounters));
+        dispatch(plusCounter(id));
     }
 
     const onMinus = (id) => {
-        const newCounters = { ...orderedCounters };
-        if (newCounters[id] > 1) {
-            newCounters[id] -= 1;
-            dispatch(changeCounters(newCounters));
-        }
+        dispatch(minusCounter(id));
     }
 
     function renderCatalog (arr) {
-        const items = arr.map(({name, price, id}) => {
+        const items = arr.map(({name, price, id, counter}) => {
             return (
                 <CartItem 
                     onRemove={() => onRemove(id)} 
-                    counter={orderedCounters[id] || 0} 
+                    counter={counter} 
                     onPlus={() => onPlus(id)} 
                     onMinus={() => onMinus(id)} 
                     name={name} 
@@ -62,7 +50,7 @@ const Cart = () => {
     let total = 0;
 
     orderedGoods.forEach(item => {
-        total += item.price * (orderedCounters[item.id] || 0);
+        total += item.price * item.counter;
     });
 
     const content = orderedGoods.length === 0 ?

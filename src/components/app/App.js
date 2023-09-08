@@ -5,9 +5,6 @@ import Shop from "../pages/Shop";
 import Cart from "../cart/Cart";
 import SelectedItem from "../pages/SelectedItem";
 
-
-
-
 const App = () => {
     return (
         <Router>

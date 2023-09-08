@@ -5,11 +5,12 @@ import { showNotification } from '../notification/NotificationSlice';
 
 import JewelryPromoItem from '../JewelryItems/JewelryPromoItem';
 import './jewelryCatalogs.scss';
+import Spiner from '../spinner/Spinner';
 
 const JewelryPromoCatalog = () => {
     const dispatch = useDispatch();
 
-    const {goods} = useSelector(state => state.goods);
+    const {goods, goodsLoadingStatus} = useSelector(state => state.goods);
 
     useEffect(() => {
         dispatch(fetchGoods());
@@ -25,9 +26,15 @@ const JewelryPromoCatalog = () => {
         }, 2000); 
     }
 
+    if (goodsLoadingStatus === 'loading') {
+        return <Spiner/>
+    } else if (goodsLoadingStatus === "error") {
+        return <Spiner/>
+    }
+
     function renderCatalog (arr) {
-        const items = arr.map(({name, price, id}) => {
-            return (<JewelryPromoItem onBuy={() => onBuy(id)} name={name} price={price} key={id}/>)
+        const items = arr.map(({name, price, id, img}) => {
+            return (<JewelryPromoItem onBuy={() => onBuy(id)} img={img} name={name} price={price} key={id} id={id}/>)
         })
 
         return (

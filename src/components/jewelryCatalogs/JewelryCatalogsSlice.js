@@ -15,7 +15,7 @@ export const fetchGoods = createAsyncThunk(
         const {request} = useHttp();
         return request("http://localhost:3001/goods");
     }
-);
+);  
 
 const JewelryCatalogsSlice = createSlice({
     name: 'goods',
@@ -28,16 +28,41 @@ const JewelryCatalogsSlice = createSlice({
             if (!itemExistsInOrderedGoods) {
                 const newItem = state.goods.find(item => item.id === itemIdToAdd);
                 if (newItem) {
-                    state.orderedGoods.push(newItem);
+                    state.orderedGoods.push({ ...newItem, counter: 0 });
                 }
             }
         },
         removeGoods: (state, action) => {
             const itemIdToRemove = action.payload;
             state.orderedGoods = state.orderedGoods.filter(item => item.id !== itemIdToRemove);
+
+            state.orderedGoods.forEach(item => {
+                if (item.id === action.payload) {
+                    item.counter = 0;
+                }
+            })
         },
-        changeCounters: (state, action) => {
-            state.orderedCounters = action.payload;
+        plusCounter: (state, action) => {
+            state.orderedGoods.forEach(item => {
+                if (item.id === action.payload) {
+                    item.counter += 1;
+                }
+            })
+        },
+        minusCounter: (state, action) => {
+            state.orderedGoods.forEach(item => {
+                if (item.id === action.payload) {
+                    item.counter -= 1;
+                }
+            })
+        },
+        addCounter: (state, action) => {
+            const { id, counter } = action.payload;
+            state.orderedGoods.forEach(item => {
+                if (item.id == id) {
+                    item.counter += counter;
+                }
+            })
         },
         fetchSelectedItem: (state, action) => {state.selectedItemId = action.payload}
     },
@@ -63,6 +88,8 @@ export const {
     goodsFetchingError,
     addedGoods,
     removeGoods,
-    changeCounters,
+    plusCounter,
+    minusCounter,
+    addCounter,
     fetchSelectedItem
 } = actions;
