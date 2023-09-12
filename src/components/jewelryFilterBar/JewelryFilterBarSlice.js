@@ -2,13 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     term: '',
+    filterShopBy: 'default',
+    filterSortBy: 'default',
     minValue: 0,
     maxValue: 0,
     maxPrice: 0,
     minPrice: 0,
     sliderMinValue: 0,
     sliderMaxValue: 0
-
 }
 
 
@@ -17,6 +18,8 @@ const JewelryFilterBarSlice = createSlice({
     initialState,
     reducers: {
         updateTerm: (state, action) => {state.term = action.payload},
+        setfilterShopBy: (state, action) => {state.filterShopBy = action.payload},
+        setfilterSortBy: (state, action) => {state.filterSortBy = action.payload},
         setMinValue: (state, action) => {state.minValue = action.payload},
         setMaxValue: (state, action) => {state.maxValue = action.payload},
         setMaxPrice: (state, action) => {state.maxPrice = action.payload},
@@ -33,6 +36,8 @@ export default reducer;
 
 export const {
     updateTerm,
+    setfilterShopBy,
+    setfilterSortBy,
     setMinValue,
     setMaxValue,
     setMaxPrice,

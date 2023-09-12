@@ -4,43 +4,59 @@
             "id": 1,
             "name": "Lira Earrings",
             "price": "20.00",
-            "type": "earrings",
-            "img": "./src/assets/img/Cards/01.jpg"
+            "type": "Earrings",
+            "sale": 21,
+            "descr": "Hello new wordls",
+            "info": {
+                "weight": "1123 kg",
+                "dimentions": "15 x 10 x 1 cm",
+                "colours": "Black, Browns, White",
+                "material": "Metal"
+            },
+            "reviews": [
+                {
+                    "name": "Alex Show",
+                    "rating": 5,
+                    "descr": "lorem asa fasfa vz"
+                },
+                {
+                    "name": "Nike Sewhow",
+                    "rating": 2,
+                    "descr": "lorem ia asa fasfa vz"
+                }
+            ]
         },
         {
             "id": 2,
             "name": "Hal Earrings",
             "price": "25.00",
-            "type": "earrings",
-            "img": "./src/assets/img/Cards/02.jpg"
+            "type": "Earrings"
         },
         {
             "id": 3,
             "name": "Kaede Hair Pin Set Of 3",
             "price": "30.00",
-            "type": "hairpin",
-            "img": "./src/assets/img/Cards/03.jpg"
+            "type": "Hairpin"
         },
         {
             "id": 4,
             "name": "Plaine Necklace",
             "price": "19.00",
-            "type": "necklace",
-            "img": "./src/assets/img/Cards/04.jpg"
+            "type": "Necklace"
         },
         {
             "id": 5,
             "name": "Lira Earrings",
             "price": "20.00",
-            "type": "earrings",
-            "img": "./src/assets/img/Cards/05.jpg"
+            "type": "Earrings",
+            "availability": 0
+            
         },
         {
             "id": 6,
             "name": "Yuki Hair Pin Set of 3",
             "price": "29.00",
-            "type": "hairpin",
-            "img": "./src/assets/img/Cards/06.jpg"
+            "type": "Hairpin"
         }
     ]
 }

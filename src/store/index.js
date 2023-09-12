@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import goods from '../components/jewelryCatalogs/JewelryCatalogsSlice';
 import filters from '../components/jewelryFilterBar/JewelryFilterBarSlice';
 import notification from '../components/notification/NotificationSlice';
-import item from '../components/infoItem/InfoItemSlice';
+import item from '../components/selectedItem/SelectedItemSlice';
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {

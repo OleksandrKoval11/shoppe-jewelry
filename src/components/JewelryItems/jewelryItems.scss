@@ -59,3 +59,18 @@
     font-weight: 500;
     line-height: 26px; 
 }
+
+.catalog__item-status {
+    padding:4px 8px;
+    position: absolute;
+    top: 18px;
+    left: 16px;
+    min-width: 46px;
+    height: 24px;
+    background: #A18A68;
+    border-radius: 4px;
+    color: #FFF;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+}

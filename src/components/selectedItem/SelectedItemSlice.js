@@ -2,15 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     selectedItemId: [],
-    filter: 'descr'
+    filter: 'descr',
+    type: ''
 }
 
-const InfoItemSlice = createSlice({
+const SelectedItemSlice = createSlice({
     name: 'item',
     initialState,
     reducers: {
         fetchSelectedItem: (state, action) => {
-            state.selectedItemId = { Id: action.payload, counter: 1};
+            state.selectedItemId = { ...action.payload, counter: 1};
         },
         counterPlus: (state) => {
             if (state.selectedItemId) {
@@ -24,11 +25,12 @@ const InfoItemSlice = createSlice({
         },
         changeFilter: (state, action) => {
             state.filter = action.payload;
-        }
+        },
+        getTypeOfItem: (state, action) => {state.type = action.payload}
     }    
 });
 
-const {actions, reducer} = InfoItemSlice;
+const {actions, reducer} = SelectedItemSlice;
 
 export default reducer;
 
@@ -36,5 +38,6 @@ export const {
     fetchSelectedItem,
     counterPlus,
     counterMinus,
-    changeFilter
+    changeFilter,
+    getTypeOfItem
 } = actions;

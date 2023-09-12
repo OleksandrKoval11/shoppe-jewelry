@@ -12,25 +12,39 @@ const JewelryShopCatalog = () => {
     const filteredGoodsSelector = createSelector(
         (state) => state.goods.goods,
         (state) => state.filters.term,
+        (state) => state.filters.filterShopBy,
+        (state) => state.filters.filterSortBy,
         (state) => state.filters.minValue,
         (state) => state.filters.maxValue,
-        (goods, term, minValue, maxValue) => {
-            return goods.filter(item => {
-                const lowerCaseName = item.name.toLowerCase();
-                const nameIncludesTerm = lowerCaseName.includes(term.toLowerCase());
-                const priceInRange = item.price >= minValue && item.price <= maxValue;
-            
-                return nameIncludesTerm && priceInRange;
-            });
+        (goods, term, filterShopBy, filterSortBy, minValue, maxValue) => {
+            return goods
+                .filter(item => {
+                    const lowerCaseName = item.name.toLowerCase();
+                    const nameIncludesTerm = lowerCaseName.includes(term.toLowerCase());
+                    const priceInRange = item.price >= minValue && item.price <= maxValue;
+                    const typeMatchesFilter = filterShopBy === 'default' || item.type === filterShopBy;
+    
+                    return nameIncludesTerm && priceInRange && typeMatchesFilter;
+                })
+                .sort((a, b) => {
+                    if (filterSortBy === 'minToMax') {
+                        return a.price - b.price;
+                    } else if (filterSortBy === 'maxToMin') {
+                        return b.price - a.price;
+                    } else {
+                        return 0;
+                    }
+                });
         }
-    )
+    );    
 
-    const dispatch = useDispatch();
-    const {goodsLoadingStatus} = useSelector(state => state.goods);
     const filteredGoods = useSelector(filteredGoodsSelector);
+    const {goodsLoadingStatus} = useSelector(state => state.goods);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchGoods());
+        dispatch(showNotification(false));
         // eslint-disable-next-line
     }, []); 
 
@@ -47,12 +61,12 @@ const JewelryShopCatalog = () => {
     if (goodsLoadingStatus === 'loading') {
         return <Spiner/>
     } else if (goodsLoadingStatus === "error") {
-        return <Spiner/>
+        return <h5 className='no-results-message'>An error occurred while loading the data</h5>
     }
 
     function renderCatalog (arr) {
-        const items = arr.map(({name, price, id}) => {
-            return (<JewelryShopItem onBuy={() => onBuy(id)} name={name} price={price} key={id} id={id}/>)
+        const items = arr.map(({name, price, id, sale, availability}) => {
+            return (<JewelryShopItem onBuy={() => onBuy(id)} name={name} price={price} sale={sale} availability={availability} key={id} id={id}/>)
         })
 
         return (

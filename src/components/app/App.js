@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 import MainPage from "../pages/MainPage";
-import Shop from "../pages/Shop";
+import Shop from "../pages/Shop/Shop";
 import Cart from "../cart/Cart";
 import SelectedItem from "../pages/SelectedItem";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const App = () => {
     return (
@@ -20,6 +21,9 @@ const App = () => {
                 </Route>
                 <Route exact path="/cart">
                     <Cart/>
+                </Route>
+                <Route path="*">
+                    <ErrorPage/>
                 </Route>
             </Switch>
         </Router>

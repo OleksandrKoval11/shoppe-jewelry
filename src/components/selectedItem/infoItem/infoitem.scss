@@ -1,8 +1,9 @@
-.info {
-    margin-top: 130px;
+.info__notification {
+    height: 70px;
 }
 
 .info__wrapper {
+    margin-top: 60px;
     display: flex;
     column-gap: 65px;
 }
@@ -90,10 +91,6 @@
     font-size: 16px;
     font-weight: 700;
     text-align: center;
-}
-
-.info__wishlist {
-    margin-top: 80px;
 }
 
 .info__catgrs {

@@ -29,12 +29,12 @@ const JewelryPromoCatalog = () => {
     if (goodsLoadingStatus === 'loading') {
         return <Spiner/>
     } else if (goodsLoadingStatus === "error") {
-        return <Spiner/>
+        return <h5 className='no-results-message'>An error occurred while loading the data</h5>
     }
 
     function renderCatalog (arr) {
-        const items = arr.map(({name, price, id, img}) => {
-            return (<JewelryPromoItem onBuy={() => onBuy(id)} img={img} name={name} price={price} key={id} id={id}/>)
+        const items = arr.map(({name, price, id}) => {
+            return (<JewelryPromoItem onBuy={() => onBuy(id)} name={name} price={price} key={id} id={id}/>)
         })
 
         return (

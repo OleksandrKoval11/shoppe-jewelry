@@ -1,10 +1,12 @@
 import { useSelector } from 'react-redux';
 
-import Header from "../header/Header";
-import Notification from "../notification/Notification";
-import JewelryShopCatalog from "../jewelryCatalogs/JewelryShopCatalog";
-import JewelryFilterBar from "../jewelryFilterBar/JewelryFilterBar";
-import Footer from '../footer/Footer';
+import Header from "../../header/Header";
+import Notification from "../../notification/Notification";
+import JewelryShopCatalog from "../../jewelryCatalogs/JewelryShopCatalog";
+import JewelryFilterBar from "../../jewelryFilterBar/JewelryFilterBar";
+import Footer from '../../footer/Footer';
+
+import './shop.scss';
 
 const Shop = () => {
     const {notificationStatus} = useSelector(state => state.notification);
@@ -12,7 +14,9 @@ const Shop = () => {
     return (
         <>
             <Header line={true}/>
-            {notificationStatus ? <Notification/> : null}
+            <div className="shop__notification">
+                {notificationStatus ? <Notification/> : null}
+            </div>
             <div className="container">
                 <div className="shop__wrapper">
                     <JewelryFilterBar/>
