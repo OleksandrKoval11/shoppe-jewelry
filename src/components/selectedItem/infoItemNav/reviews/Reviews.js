@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import AddReview from './AddReview';
 
 import ReviewItem from './ReviewItem';
 
@@ -22,6 +23,7 @@ const Reviews = () => {
                             />
                         ))}
                     </div>
+                    <AddReview/>
                 </div>
             </div>
         );
@@ -32,6 +34,7 @@ const Reviews = () => {
                     <div className="reviews__items">
                         <div className="reviews__title">No Reviews for {selectedItemId.name}</div>
                     </div>
+                    <AddReview/>
                 </div>
             </div>
         );

@@ -7,6 +7,7 @@ import SelectedItem from "../pages/SelectedItem";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const App = () => {
+
     return (
         <Router>
             <Switch>

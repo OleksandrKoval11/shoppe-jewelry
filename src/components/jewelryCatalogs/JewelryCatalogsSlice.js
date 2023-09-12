@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useHttp } from '../../hooks/http.hook';
+import { useFirebaseDatabase } from "../../hooks/get.firebase";
 
 const initialState = {
     goods: [],
@@ -12,8 +13,8 @@ const initialState = {
 export const fetchGoods = createAsyncThunk(
     'goods/fetchGoods',
     () => {
-        const {request} = useHttp();
-        return request("http://localhost:3001/goods");
+        const {request} = useFirebaseDatabase();
+        return request("/goods");
     }
 );  
 

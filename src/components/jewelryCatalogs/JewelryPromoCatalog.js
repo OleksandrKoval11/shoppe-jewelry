@@ -14,8 +14,9 @@ const JewelryPromoCatalog = () => {
 
     useEffect(() => {
         dispatch(fetchGoods());
+
         // eslint-disable-next-line
-    }, []);
+    }, [dispatch]);
 
     const onBuy = (id) => {
         dispatch(addedGoods(id));

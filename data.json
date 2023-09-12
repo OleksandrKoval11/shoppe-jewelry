@@ -6,23 +6,23 @@
             "price": "20.00",
             "type": "Earrings",
             "sale": 21,
-            "descr": "Hello new wordls",
+            "descr": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat, augue a volutpat hendrerit, sapien tortor faucibus augue, a maximus elit ex vitae libero. Sed quis mauris eget arcu facilisis consequat sed eu felis. Nunc sed porta augue. Morbi porta tempor odio, in molestie diam bibendum sed.",
             "info": {
-                "weight": "1123 kg",
+                "weight": "0.3 kg",
                 "dimentions": "15 x 10 x 1 cm",
                 "colours": "Black, Browns, White",
                 "material": "Metal"
             },
             "reviews": [
                 {
-                    "name": "Alex Show",
+                    "name": "Scarlet withch",
                     "rating": 5,
-                    "descr": "lorem asa fasfa vz"
+                    "descr": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet."
                 },
                 {
-                    "name": "Nike Sewhow",
+                    "name": "Scarlet withch",
                     "rating": 2,
-                    "descr": "lorem ia asa fasfa vz"
+                    "descr": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat."
                 }
             ]
         },
@@ -30,33 +30,86 @@
             "id": 2,
             "name": "Hal Earrings",
             "price": "25.00",
-            "type": "Earrings"
+            "type": "Earrings",
+            "descr": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat, augue a volutpat hendrerit, sapien tortor faucibus augue, a maximus elit ex vitae libero. Sed quis mauris eget arcu facilisis consequat sed eu felis. Nunc sed porta augue. Morbi porta tempor odio, in molestie diam bibendum sed.",
+            "info": {
+                "weight": "0.3 kg",
+                "dimentions": "15 x 10 x 1 cm",
+                "colours": "Black, Browns, White",
+                "material": "Metal"
+            },
+            "reviews": [
+                {
+                    "name": "Scarlet withch",
+                    "rating": 1,
+                    "descr": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet."
+                },
+                {
+                    "name": "Scarlet withch",
+                    "rating": 4,
+                    "descr": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat."
+                }
+            ]
         },
         {
             "id": 3,
             "name": "Kaede Hair Pin Set Of 3",
             "price": "30.00",
-            "type": "Hairpin"
+            "type": "Hairpin",
+            "descr": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat, augue a volutpat hendrerit, sapien tortor faucibus augue, a maximus elit ex vitae libero. Sed quis mauris eget arcu facilisis consequat sed eu felis. Nunc sed porta augue. Morbi porta tempor odio, in molestie diam bibendum sed.",
+            "info": {
+                "weight": "0.3 kg",
+                "dimentions": "15 x 10 x 1 cm",
+                "colours": "Black, Browns, White",
+                "material": "Metal"
+            },
+            "reviews": [
+                {
+                    "name": "Scarlet withch",
+                    "rating": 5,
+                    "descr": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet."
+                }
+            ]
         },
         {
             "id": 4,
             "name": "Plaine Necklace",
             "price": "19.00",
-            "type": "Necklace"
+            "type": "Necklace",
+            "info": {
+                "weight": "0.3 kg",
+                "dimentions": "15 x 10 x 1 cm",
+                "colours": "Black, Browns, White",
+                "material": "Metal"
+            },
+            "reviews": []
         },
         {
             "id": 5,
             "name": "Lira Earrings",
             "price": "20.00",
             "type": "Earrings",
-            "availability": 0
-            
+            "availability": 0,
+            "info": {
+                "weight": "0.3 kg",
+                "dimentions": "15 x 10 x 1 cm",
+                "colours": "Black, Browns, White",
+                "material": "Metal"
+            },
+            "reviews": []
         },
         {
             "id": 6,
             "name": "Yuki Hair Pin Set of 3",
             "price": "29.00",
-            "type": "Hairpin"
+            "type": "Hairpin",
+            "info": {
+                "weight": "0.3 kg",
+                "dimentions": "15 x 10 x 1 cm",
+                "colours": "Black, Browns, White",
+                "material": "Metal"
+            },
+            "reviews": []
         }
     ]
 }

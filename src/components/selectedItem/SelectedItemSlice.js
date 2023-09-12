@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     selectedItemId: [],
     filter: 'descr',
-    type: ''
+    review: '',
+    name: '',
+    rating: 0
 }
 
 const SelectedItemSlice = createSlice({
@@ -26,7 +28,18 @@ const SelectedItemSlice = createSlice({
         changeFilter: (state, action) => {
             state.filter = action.payload;
         },
-        getTypeOfItem: (state, action) => {state.type = action.payload}
+        addReview: (state, action) => {
+            state.selectedItemId.reviews.push(action.payload);
+        },
+        changeName: (state, action) => {
+            state.name = action.payload;
+        },
+        changeReview: (state, action) => {
+            state.review = action.payload;
+        },
+        changeRating: (state, action) => {
+            state.rating = action.payload
+        }
     }    
 });
 
@@ -39,5 +52,8 @@ export const {
     counterPlus,
     counterMinus,
     changeFilter,
-    getTypeOfItem
+    addReview,
+    changeName,
+    changeRating,
+    changeReview
 } = actions;
