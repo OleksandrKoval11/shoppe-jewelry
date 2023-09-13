@@ -8,15 +8,14 @@ import './jewelryCatalogs.scss';
 import Spiner from '../spinner/Spinner';
 
 const JewelryPromoCatalog = () => {
-    const dispatch = useDispatch();
-
     const {goods, goodsLoadingStatus} = useSelector(state => state.goods);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchGoods());
-
+      
         // eslint-disable-next-line
-    }, [dispatch]);
+    }, []);
 
     const onBuy = (id) => {
         dispatch(addedGoods(id));
@@ -34,6 +33,7 @@ const JewelryPromoCatalog = () => {
     }
 
     function renderCatalog (arr) {
+        
         const items = arr.map(({name, price, id}) => {
             return (<JewelryPromoItem onBuy={() => onBuy(id)} name={name} price={price} key={id} id={id}/>)
         })

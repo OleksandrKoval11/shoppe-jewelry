@@ -28,14 +28,15 @@ const Cart = () => {
     }
 
     function renderCatalog (arr) {
-        const items = arr.map(({name, price, id, counter}) => {
+        const items = arr.map(({name, price, id, counter}, i) => {
             return (
                 <CartItem 
                     onRemove={() => onRemove(id)} 
                     counter={counter} 
                     onPlus={() => onPlus(id)} 
                     onMinus={() => onMinus(id)} 
-                    name={name} 
+                    name={name}
+                    id={id}
                     price={price} 
                     key={id}/>)
         })

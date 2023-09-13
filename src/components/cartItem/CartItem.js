@@ -1,11 +1,13 @@
-import img from '../../assets/img/Cards/01.jpg';
+import ImagesData from '../imagesData/ImagesData';
 
-const CartItem = ({name, price, onRemove = null, counter = null, onPlus = null, onMinus = null}) => {
+const CartItem = ({name, price, id, onRemove = null, counter = null, onPlus = null, onMinus = null}) => {
+    const image = ImagesData[id];
+
     return (
         <>
             <div className="cart__item">
                 <div className="cart__item-wrapper">
-                    <img src={img} alt="img" className='cart__item-img'/>
+                    <img src={image} alt="img" className='cart__item-img'/>
                     <div className="cart__item-info">
                         <div className="cart__item-title">{name}</div>
                         <div className="cart__item-type">Black / Medium</div>

@@ -7,9 +7,24 @@ import { fetchGoods, addCounter, addedGoods } from '../../jewelryCatalogs/Jewelr
 
 
 import Notification from '../../notification/Notification';
-import img from '../../../assets/img/Cards/01.jpg';
 
 import './infoitem.scss';
+
+import img1 from '../../../assets/img/Cards/01.jpg';
+import img2 from '../../../assets/img/Cards/02.jpg';
+import img3 from '../../../assets/img/Cards/03.jpg';
+import img4 from '../../../assets/img/Cards/04.jpg';
+import img5 from '../../../assets/img/Cards/05.jpg';
+import img6 from '../../../assets/img/Cards/06.jpg';
+
+const idToImageMap = {
+    1: img1,
+    2: img2,
+    3: img3,
+    4: img4,
+    5: img5,
+    6: img6,
+};
 
 const InfoItem = () => {
     const { Id } = useParams();
@@ -22,6 +37,7 @@ const InfoItem = () => {
     useEffect(() => {   
         dispatch(fetchGoods());
         dispatch(showNotification(false));
+        window.scrollTo(0, 0);
 		// eslint-disable-next-line
 	}, [Id]);
 
@@ -97,6 +113,8 @@ const InfoItem = () => {
 
     const {name, price} = selectedItemId;
 
+    const image = idToImageMap[+Id];
+
     return (
         <div className="info">
             <div className="container">
@@ -106,12 +124,12 @@ const InfoItem = () => {
                 <div className="info__wrapper">
                     <div className="info__imgs-wrapper">
                         <div className="info__imgs">
-                            <img src={img} alt="img" className="info__img" />
-                            <img src={img} alt="img" className="info__img" />
-                            <img src={img} alt="img" className="info__img" />
-                            <img src={img} alt="img" className="info__img" />
+                            <img src={image} alt="img" className="info__img" />
+                            <img src={image} alt="img" className="info__img" />
+                            <img src={image} alt="img" className="info__img" />
+                            <img src={image} alt="img" className="info__img" />
                         </div>
-                        <img src={img} alt="img" className="info__main-img" />
+                        <img src={image} alt="img" className="info__main-img" />
                     </div>
 
                     <div className="info__text">

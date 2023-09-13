@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 import './jewelryItems.scss';
-import img from '../../assets/img/Cards/01.jpg';
+import ImagesData from '../imagesData/ImagesData';
 
 const JewelryShopItem = ({name, price, onBuy, id, sale, availability}) => {
 
@@ -11,13 +11,14 @@ const JewelryShopItem = ({name, price, onBuy, id, sale, availability}) => {
         <div className="catalog__item-status">Sold out</div> 
     ) : null;
 
+    const image = ImagesData[id];
 
     return (
         <div className="catalog__item catalog__item-shop">
             <div className='catalog__item-wrapper'>
                 {status}
                 <Link to={`shop/${id}`}>
-                    <img src={img} alt={name} className="shop__item-img"/>
+                    <img src={image} alt={name} className="shop__item-img"/>
                 </Link>
                 {availability === 0 ? null : 
                 <div className="catalog__item-hover" onClick={onBuy}>
