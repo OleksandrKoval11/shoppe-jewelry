@@ -20,20 +20,20 @@ const Header = ({line}) => {
                         <nav className="header__nav">
                             <ul>                           
                                 <li><NavLink to="/shop" activeClassName="header__link-active" >Shop</NavLink></li>
-                                <li><a href="#!" className=''>Blog</a></li>
-                                <li><a href="#!" className=''>Our Story</a></li>
+                                <li><NavLink to="/blog" activeClassName="header__link-active">Blog</NavLink></li>
+                                <li><NavLink to="/story" activeClassName="header__link-active">Our Story</NavLink></li>
                             </ul>
                         </nav>  
                         <div className="header__btns">
-                            <a href='#!' className=''>
+                            <NavLink to='/search' activeClassName="header__link-active">
                                 <img src={search} alt="search" />
-                            </a>
+                            </NavLink>
                             <NavLink to='/cart' activeClassName="header__link-active">
                                 <img src={cart} alt="cart" />
                             </NavLink>
-                            <a href='#!'>
+                            <NavLink to='/profile' activeClassName="header__link-active">
                                 <img src={profile} alt="profile" />
-                            </a>
+                            </NavLink>
                         </div>
                     </div>
                 </div>
