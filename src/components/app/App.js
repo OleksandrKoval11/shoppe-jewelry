@@ -6,7 +6,7 @@ import Cart from "../cart/Cart";
 import SelectedItem from "../pages/SelectedItem";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import UnderConstructionPage from "../pages/UnderConstructionPage";
-import Authorization from "../authorization/Authorization";
+import AuthorizationPage from "../pages/AuthorizationPage";
 
 const App = () => {
 
@@ -35,7 +35,7 @@ const App = () => {
                     <UnderConstructionPage/>
                 </Route>
                 <Route path="/profile">
-                    <UnderConstructionPage/>
+                    <AuthorizationPage/>
                 </Route>
                 <Route path="*">
                     <ErrorPage/>

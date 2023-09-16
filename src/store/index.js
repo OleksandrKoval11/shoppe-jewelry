@@ -3,6 +3,7 @@ import goods from '../components/jewelryCatalogs/JewelryCatalogsSlice';
 import filters from '../components/jewelryFilterBar/JewelryFilterBarSlice';
 import notification from '../components/notification/NotificationSlice';
 import item from '../components/selectedItem/SelectedItemSlice';
+import authorization from '../components/authorization/AuthorizationSlice';
 
 const stringMiddleware = () => (next) => (action) => {
     if (typeof action === 'string') {
@@ -14,7 +15,7 @@ const stringMiddleware = () => (next) => (action) => {
 }
 
 const store = configureStore({
-    reducer: {goods, filters, notification, item},
+    reducer: {goods, filters, notification, item, authorization},
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat(stringMiddleware),
     devTools: process.env.NODE_ENV !== 'production'
 })
