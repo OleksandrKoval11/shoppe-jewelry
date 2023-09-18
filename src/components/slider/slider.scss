@@ -58,9 +58,7 @@
     text-align: center;
 }
 
-.slider__active {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 25px;
+.swiper-pagination-bullet-active {
+    background: #ffff;
 }
+  

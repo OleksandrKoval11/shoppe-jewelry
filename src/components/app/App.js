@@ -7,6 +7,7 @@ import SelectedItem from "../pages/SelectedItem";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import UnderConstructionPage from "../pages/UnderConstructionPage";
 import AuthorizationPage from "../pages/AuthorizationPage";
+import CheckoutPage from "../pages/CheckoutPage";
 
 const App = () => {
 
@@ -24,6 +25,9 @@ const App = () => {
                 </Route>
                 <Route exact path="/cart">
                     <Cart/>
+                </Route>
+                <Route exact path="/cart/checkout">
+                    <CheckoutPage/>
                 </Route>
                 <Route path="/blog">
                     <UnderConstructionPage/>

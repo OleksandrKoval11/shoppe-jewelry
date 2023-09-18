@@ -97,7 +97,7 @@ const Cart = () => {
                                 <div className="cart__total">TOTAl</div>
                                 <div className="cart__total">$ {total}</div>
                             </div>
-                            {orderedGoods.length > 0 ? <button className='btn-cheackout'>PROCEED TO CHECKOUT</button> : null}
+                            {orderedGoods.length > 0 ? <Link to="/cart/checkout"><button className='btn-cheackout'>PROCEED TO CHECKOUT</button></Link> : null}
                         </div>
                     </div>
                 </div>
