@@ -5,7 +5,9 @@ const initialState = {
     filter: 'descr',
     review: '',
     name: '',
-    rating: 0
+    rating: 0,
+    slides: 4,
+    activeSlideIndex: 1
 }
 
 const SelectedItemSlice = createSlice({
@@ -39,6 +41,9 @@ const SelectedItemSlice = createSlice({
         },
         changeRating: (state, action) => {
             state.rating = action.payload
+        },
+        changeActiveSlideIndex: (state, action) => {
+            state.activeSlideIndex = action.payload
         }
     }    
 });
@@ -55,5 +60,6 @@ export const {
     addReview,
     changeName,
     changeRating,
-    changeReview
+    changeReview,
+    changeActiveSlideIndex
 } = actions;
