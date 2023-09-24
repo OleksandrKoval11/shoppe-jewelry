@@ -52,7 +52,7 @@ const JewelryCatalogsSlice = createSlice({
         },
         minusCounter: (state, action) => {
             state.orderedGoods.forEach(item => {
-                if (item.id === action.payload) {
+                if (item.id === action.payload && item.counter > 1) {
                     item.counter -= 1;
                 }
             })

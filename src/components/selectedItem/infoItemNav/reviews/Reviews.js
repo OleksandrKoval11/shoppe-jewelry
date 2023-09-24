@@ -20,6 +20,7 @@ const Reviews = () => {
                                 name={review.name}
                                 rating={review.rating}
                                 descr={review.descr}
+                                date={review.date}
                             />
                         ))}
                     </div>

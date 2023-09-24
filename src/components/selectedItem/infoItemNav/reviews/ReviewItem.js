@@ -1,4 +1,4 @@
-const ReviewItem = ({name, rating, descr}) => {
+const ReviewItem = ({name, rating, descr, date}) => {
 
     const starSelected = (
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -35,7 +35,7 @@ const ReviewItem = ({name, rating, descr}) => {
         <div className="review__item">
             <div className="review__wrapper">
                 <div className="review__name">{name}</div>
-                <div className="review__data">6 May, 2020</div>
+                <div className="review__data">{date ? date : '6 May, 2020'}</div>
             </div>
             <div className="review__rate">{renderRatingStars()}</div>
             <div className="review__descr">{descr}</div>

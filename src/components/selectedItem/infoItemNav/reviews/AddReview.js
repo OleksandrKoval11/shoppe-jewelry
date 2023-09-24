@@ -1,58 +1,41 @@
-import { useHttp } from "../../../../hooks/http.hook";
+import { usePostFirebaseDatabase } from "../../../../hooks/get.firebase";
 import { useDispatch, useSelector } from 'react-redux';
-import { addReview, changeName, changeRating, changeReview } from "../../SelectedItemSlice";
+import { addReview, changeRating } from "../../SelectedItemSlice";
 import { v4 as uuidv4 } from 'uuid';
+import { format } from "date-fns";
 
-import { useFormik } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 const AddReview = () => {
-    const formik = useFormik({
-        initialValues: {
-            text: '',
-            name: ''
-        },
-        validationSchema: Yup.object({
-            text: Yup.string()
-                    .min(10, 'The field must contain at least 10 characters!')
-                    .required('Obligatory field!'),
-            name: Yup.string()
-                    .min(2, 'The field must contain at least 2 characters!')
-                    .required('Obligatory field!')
-        }),
-        onSubmit: values => console.log(JSON.stringify(values, null, 2))
-    })
-    
-    const {selectedItemId, review, name, rating} = useSelector(state => state.item);
+    const {selectedItemId, rating} = useSelector(state => state.item);
 
     const dispatch = useDispatch();
-    const {request} = useHttp();
+    const { postOrSetData } = usePostFirebaseDatabase();
 
     const {id} = selectedItemId;
 
-    const submitForm = (e) => {
-        e.preventDefault();
+    const currentDate = new Date();
+    const formattedDate = format(currentDate, "d MMM, yyyy");
 
-        if (!name || !review || rating === 0) {
+    const submitForm = async (name, text) => {
+        if (!name || !text || !rating) {
             return;
         }
 
         const newReview = {
             id: uuidv4(),
             name: name,
-            descr: review,
-            rating: rating
+            descr: text,
+            rating: rating,
+            date: formattedDate
         }
 
-        request(`http://localhost:3001/goods/${id}/reviews`, "POST", JSON.stringify(newReview))
-            .then(res => console.log(res, 'Отправка успешна'))
+        postOrSetData(`goods/${id}/reviews`, newReview, false)
             .then(dispatch(addReview(newReview)))
-            .catch(err => console.log(err));
+            .then(dispatch(changeRating(0)))
+    };
 
-        dispatch(changeReview(''));
-        dispatch(changeName(''));
-        dispatch(changeRating(0))
-    }
 
     const renderStars = () => {
         const stars = [];
@@ -91,44 +74,58 @@ const AddReview = () => {
         <div className="add-review">
             <div className="add-review__title">Add a Review</div>
             <div className="add-review__mark">Your email address will not be published. Required fields are marked *</div>
-            <form className="add-review__form" onSubmit={formik.handleSubmit}>
-                <div className="add-review__form-text">Your Review*</div>
-                <div className="input__wrapper">
-                    <input  
-                        type="text" 
-                        value={formik.values.text} 
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        name="text" 
-                        id="text" 
-                        className="add-review__form-input"/>
-                    {formik.errors.text && formik.touched.text ? <div className="add-review__form-error">{formik.errors.text}</div> : null}
-                </div>
-                <div className="input__wrapper">
-                    <input 
-                        type="text" 
-                        value={formik.values.name}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        name="name" 
-                        id="name" 
-                        placeholder="Enter your name*" 
-                        required 
-                        className="add-review__form-input"/>
-                    {formik.errors.name && formik.touched.name ? <div className="add-review__form-error">{formik.errors.name}</div> : null}
-                </div>
-                <div className="add-review__form-wrapper">
-                    <input 
-                        type="checkbox" 
-                        className="add-review__form-checkbox"/>
-                    <div className="add-review__form-mark">Save my name, email, and website in this browser for the next time I comment</div>
-                </div>
-                <div className="add-review__form-text">Your Rating*</div>
-                <div className="add-review__form-rating">
-                    {renderStars()}
-                </div>
-                <button onClick={submitForm} className="add-review__form-submit">Submit</button>
-            </form>
+            <Formik
+                initialValues = {{
+                text: '',
+                name: ''
+                }}
+                validationSchema = {Yup.object({
+                    text: Yup.string()
+                            .min(10, 'The field must contain at least 10 characters!')
+                            .required('Obligatory field!'),
+                    name: Yup.string()
+                            .min(2, 'The field must contain at least 2 characters!')
+                            .required('Obligatory field!')
+                })}
+                onSubmit = {(values, {resetForm}) => {
+                    submitForm(values.name, values.text) 
+                    resetForm()
+                }}
+            >
+                <Form className="add-review__form">
+                    <div className="add-review__form-text">Your Review*</div>
+                    <div className="input__wrapper">
+                        <Field  
+                            type="text" 
+                            name="text" 
+                            id="text" 
+                            className="add-review__form-input"
+                            />
+                        <ErrorMessage className="add-review__form-error" name="text" component="div"/>
+                    </div>
+                    <div className="input__wrapper">
+                        <Field 
+                            type="text" 
+                            name="name" 
+                            id="name" 
+                            placeholder="Enter your name*"
+                            className="add-review__form-input"
+                            />
+                        <ErrorMessage className="add-review__form-error" name="name" component="div"/>
+                    </div>
+                    <div className="add-review__form-wrapper">
+                        {/* <input 
+                            type="checkbox" 
+                            className="add-review__form-checkbox"/>
+                        <div className="add-review__form-mark">Save my name, email, and website in this browser for the next time I comment</div> */}
+                    </div>
+                    <div className="add-review__form-text">Your Rating*</div>
+                    <div className="add-review__form-rating">
+                        {renderStars()}
+                    </div>
+                    <button className="add-review__form-submit">Submit</button>
+                </Form>
+            </Formik>
         </div>
     )
 }

@@ -23,7 +23,7 @@ const SelectedItemSlice = createSlice({
             }
         },
         counterMinus: (state) => {
-            if (state.selectedItemId) {
+            if (state.selectedItemId && state.selectedItemId.counter > 1) {
                 state.selectedItemId.counter -= 1;
             }
         },
